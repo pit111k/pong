@@ -20,5 +20,6 @@ def main():
     # run the game
     pong.run()
 
+
 if __name__ == "__main__":
     main()
