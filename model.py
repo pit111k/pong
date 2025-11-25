@@ -434,17 +434,20 @@ class Circ:
         self.randomize_movement()
         self.set_step(settings.BALL_STEP)
 
+
 class MenuState:
     def __init__(self):
-        self.btn_single = Button((settings.BUTTON_START_POS_X, settings.BUTTON_START_POS_Y),
-                                 settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
-                                 settings.BUTTON_HOVER_COLOR, "Singleplayer", settings.BUTTON_TEXT_COLOR,
-                                 settings.BUTTON_FONT_SIZE)
-        self.btn_multi = Button((settings.BUTTON_START_POS_X + settings.BUTTON_WIDTH + settings.DIST_BETWEEN_BUTTONS,
-                                  settings.BUTTON_START_POS_Y),
-                                 settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
-                                 settings.BUTTON_HOVER_COLOR, "Multiplayer", settings.BUTTON_TEXT_COLOR,
-                                 settings.BUTTON_FONT_SIZE)
+        self.buttons = {
+            "single": Button((settings.BUTTON_START_POS_X, settings.BUTTON_START_POS_Y),
+                             settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
+                             settings.BUTTON_HOVER_COLOR, "Singleplayer", settings.BUTTON_TEXT_COLOR,
+                             settings.BUTTON_FONT_SIZE),
+            "multi": Button((settings.BUTTON_START_POS_X + settings.BUTTON_WIDTH + settings.DIST_BETWEEN_BUTTONS,
+                             settings.BUTTON_START_POS_Y),
+                            settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
+                            settings.BUTTON_HOVER_COLOR, "Multiplayer", settings.BUTTON_TEXT_COLOR,
+                            settings.BUTTON_FONT_SIZE)
+        }
 
 class Button:
     def __init__(self, start_pos, width, height, not_hover_color, hover_color, text, text_color, font_size):
