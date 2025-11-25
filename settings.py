@@ -25,7 +25,7 @@ BUTTON_WIDTH = 300
 BUTTON_COLOR = (255, 255, 255)
 BUTTON_HOVER_COLOR = (61, 61, 61)
 BUTTON_TEXT_COLOR = (0, 0, 0)
-BUTTON_FONT_SIZE = 20
+BUTTON_FONT_SIZE = 40
 DIST_BETWEEN_BUTTONS = 50
 BUTTON_START_POS_X = SIZE[0] // 2 - BUTTON_WIDTH - DIST_BETWEEN_BUTTONS
 BUTTON_START_POS_Y = SIZE[1] // 2 - BUTTON_HEIGHT
@@ -56,6 +56,7 @@ WINNING_SCORE = 2
 DELAY_AFTER_VICTORY = 3000  # milliseconds
 
 # game mode
+chosen = False # flag to indicate whether game mode has been chosen
 GAME_MODE = "single"  # single or multiplayer
 DIFFICULTY = "medium"  # easy, medium, hard
 DIFFICULTIES = {

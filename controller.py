@@ -32,15 +32,17 @@ class Controller:
         self.running = False
         self.fps = pygame.time.Clock()
 
-    def handle_input(self):
-        """
-        Handle user input for controlling the game.
-        :return: None
-        """
+    def handle_exit_input(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
                     self.running = False
+
+    def handle_player_movement_input(self):
+        """
+        Handle user input for controlling the game.
+        :return: None
+        """
 
         # get keys pressed
         keys = pygame.key.get_pressed()
@@ -69,8 +71,17 @@ class Controller:
         while self.running:
             self.view.fill_screen(settings.SCREEN_FILL)
 
+            if not settings.chosen:
+                self.model.menu_state.btn_single.set_hover_color(self.model.mouse_on_btn(self.model.menu_state.btn_single.rect, pygame.mouse.get_pos()))
+                self.model.menu_state.btn_multi.set_hover_color(self.model.mouse_on_btn(self.model.menu_state.btn_multi.rect, pygame.mouse.get_pos()))
+                self.view.render_game_mode(self.model.menu_state.btn_single, self.model.menu_state.btn_multi)
+                self.handle_exit_input()
+                self.view.flip()
+                continue
+
             # process input
-            self.handle_input()
+            self.handle_exit_input()
+            self.handle_player_movement_input()
 
             # update game state
             winner = None

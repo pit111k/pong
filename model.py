@@ -55,6 +55,9 @@ class Model:
             settings.BALL_STEP
         )
 
+        self.menu_state = MenuState()
+
+
     def update(self):
         """
         Update the game state: move players and ball, check for collisions,
@@ -171,6 +174,12 @@ class Model:
         elif ball_obj.pos[0] + ball_obj.radius >= settings.SIZE[0]:
             return 1
         return 0
+
+    @staticmethod
+    def mouse_on_btn(btn_rect, mouse_pos):
+        if btn_rect.collidepoint(mouse_pos):
+            return True
+        return False
 
 
 class Player:
@@ -424,3 +433,40 @@ class Circ:
         self.move_to_start(settings.BALL_START_POS)
         self.randomize_movement()
         self.set_step(settings.BALL_STEP)
+
+class MenuState:
+    def __init__(self):
+        self.btn_single = Button((settings.BUTTON_START_POS_X, settings.BUTTON_START_POS_Y),
+                                 settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
+                                 settings.BUTTON_HOVER_COLOR, "Singleplayer", settings.BUTTON_TEXT_COLOR,
+                                 settings.BUTTON_FONT_SIZE)
+        self.btn_multi = Button((settings.BUTTON_START_POS_X + settings.BUTTON_WIDTH + settings.DIST_BETWEEN_BUTTONS,
+                                  settings.BUTTON_START_POS_Y),
+                                 settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
+                                 settings.BUTTON_HOVER_COLOR, "Multiplayer", settings.BUTTON_TEXT_COLOR,
+                                 settings.BUTTON_FONT_SIZE)
+
+class Button:
+    def __init__(self, start_pos, width, height, not_hover_color, hover_color, text, text_color, font_size):
+        self.rect = Rect(start_pos[0], start_pos[1], width, height)
+        self.not_hover_color = not_hover_color
+        self.hover_color = hover_color
+        self.text = text
+        self.text_color = text_color
+        self.font_size = font_size
+        self.color = not_hover_color
+
+    def get_text_render(self):
+        return self.text, False, self.text_color
+
+    def get_dimensions(self):
+        return self.rect
+
+    def get_center(self):
+        return self.rect.center
+
+    def set_hover_color(self, is_hover):
+        if is_hover:
+            self.color = self.hover_color
+        else:
+            self.color = self.not_hover_color

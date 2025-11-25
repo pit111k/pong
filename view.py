@@ -81,4 +81,27 @@ class View:
         if winner:
             self.victory_screen(winner)
 
+        self.flip()
+
+    @staticmethod
+    def flip():
         pygame.display.flip()
+
+    def render_game_mode(self, btn1, btn2):
+        button_font = pygame.font.Font(settings.FONT, settings.BUTTON_FONT_SIZE)
+        self.screen.fill("black")
+
+        # display button one
+        self.show_button(btn1, button_font)
+
+        # display button two
+        self.show_button(btn2, button_font)
+
+
+    def show_button(self, btn, button_font):
+        pygame.draw.rect(self.screen, btn.color, btn.get_dimensions())
+
+        text_surface = button_font.render(btn.text, False, btn.text_color)
+        text_box = text_surface.get_rect()
+        text_box.center = btn.get_center()
+        self.screen.blit(text_surface, text_box)
