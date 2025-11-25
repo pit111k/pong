@@ -38,17 +38,21 @@ class Controller:
                 if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
                     self.running = False
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONUP and buttons_hovered is not None:
                 if event.button == 1 and buttons_hovered["multi"]:
                     self.apply_multi_mode()
                 if event.button == 1 and buttons_hovered["single"]:
                     self.apply_single_mode()
+                    print("mode: single")
                 if event.button == 1 and buttons_hovered["easy"]:
                     self.apply_difficulty("easy")
+                    print("diff: easy")
                 if event.button == 1 and buttons_hovered["medium"]:
                     self.apply_difficulty("medium")
+                    print("diff: medium")
                 if event.button == 1 and buttons_hovered["hard"]:
                     self.apply_difficulty("hard")
+                    print("diff: hard")
 
 
     def handle_player_movement_input(self):
@@ -73,10 +77,10 @@ class Controller:
         else:
             self.model.p2.auto_move(self.model.ball.pos, settings.SIZE)
 
-    @staticmethod
-    def apply_difficulty(difficulty):
+    def apply_difficulty(self, difficulty):
         settings.difficulty_chosen = True
         settings.DIFFICULTY = difficulty
+        self.model.update_difficulty()
 
     @staticmethod
     def apply_single_mode():
@@ -112,7 +116,7 @@ class Controller:
                 self.view.flip()
                 continue
 
-            if not settings.difficulty_chosen and settings.GAME_MODE == "single":
+            elif not settings.difficulty_chosen and settings.GAME_MODE == "single":
                 buttons_hovered = self.model.get_hovered_btns(pygame.mouse.get_pos())
                 self.model.change_color_if_hover(buttons_hovered)
 
@@ -125,6 +129,7 @@ class Controller:
                 self.handle_events(buttons_hovered)
                 self.view.flip()
                 continue
+
 
             # process input
             self.handle_events()

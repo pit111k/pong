@@ -96,6 +96,9 @@ class Model:
             return winner
         return None
 
+    def update_difficulty(self):
+        self.p2.step = settings.DIFFICULTIES[settings.DIFFICULTY]
+
     def check_winner(self):
         """
         Check if either player has reached the winning score.

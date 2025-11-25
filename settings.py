@@ -30,7 +30,7 @@ DIST_BETWEEN_BUTTONS = 50
 BUTTON_START_POS_X = SIZE[0] // 2 - BUTTON_WIDTH - DIST_BETWEEN_BUTTONS
 BUTTON_START_POS_Y = SIZE[1] // 2 - BUTTON_HEIGHT
 DIFF_BUTTON_START_POS_X = SIZE[0] // 2 - BUTTON_WIDTH/2 - BUTTON_WIDTH - DIST_BETWEEN_BUTTONS
-DIFF_BUTTON_START_POS_Y = SIZE[1] // 2 - BUTTON_HEIGHT
+DIFF_BUTTON_START_POS_Y = SIZE[1] // 2 - BUTTON_HEIGHT + 200
 
 # text controls
 TEXT_COLOR = (255, 255, 255)  # white
@@ -61,7 +61,7 @@ DELAY_AFTER_VICTORY = 3000  # milliseconds
 game_mode_chosen = False # flag to indicate whether game mode has been chosen
 GAME_MODE = "single"  # single or multiplayer
 difficulty_chosen = False
-DIFFICULTY = "medium"  # easy, medium, hard
+DIFFICULTY = "hard"  # easy, medium, hard
 DIFFICULTIES = {
     "easy": 5,
     "medium": 10,
