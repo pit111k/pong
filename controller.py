@@ -38,6 +38,8 @@ class Controller:
                 if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
                     self.running = False
 
+    # def handle_click(self, ):
+
     def handle_player_movement_input(self):
         """
         Handle user input for controlling the game.
