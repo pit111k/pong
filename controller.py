@@ -32,11 +32,23 @@ class Controller:
         self.running = False
         self.fps = pygame.time.Clock()
 
-    def handle_events(self):
+    def handle_events(self, buttons_hovered=None):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
                     self.running = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1 and buttons_hovered["multi"]:
+                    self.apply_multi_mode()
+                if event.button == 1 and buttons_hovered["single"]:
+                    self.apply_single_mode()
+                if event.button == 1 and buttons_hovered["easy"]:
+                    self.apply_difficulty("easy")
+                if event.button == 1 and buttons_hovered["medium"]:
+                    self.apply_difficulty("medium")
+                if event.button == 1 and buttons_hovered["hard"]:
+                    self.apply_difficulty("hard")
 
 
     def handle_player_movement_input(self):
@@ -61,11 +73,20 @@ class Controller:
         else:
             self.model.p2.auto_move(self.model.ball.pos, settings.SIZE)
 
-    def apply_single_mode(self):
-        pass
+    @staticmethod
+    def apply_difficulty(difficulty):
+        settings.difficulty_chosen = True
+        settings.DIFFICULTY = difficulty
 
-    def apply_multi_mode(self):
-        pass
+    @staticmethod
+    def apply_single_mode():
+        settings.game_mode_chosen = True
+        settings.GAME_MODE = "single"
+
+    @staticmethod
+    def apply_multi_mode():
+        settings.game_mode_chosen = True
+        settings.GAME_MODE = "multiplayer"
 
     def run(self):
         """
@@ -79,16 +100,29 @@ class Controller:
             self.view.fill_screen(settings.SCREEN_FILL)
 
             if not settings.game_mode_chosen:
-                buttons = self.model.get_hovered_btns(pygame.mouse.get_pos())
-                self.model.change_color_if_hover(buttons)
-
+                buttons_hovered = self.model.get_hovered_btns(pygame.mouse.get_pos())
+                self.model.change_color_if_hover(buttons_hovered)
 
                 self.view.render_game_mode(
                     self.model.menu_state.buttons["single"],
                     self.model.menu_state.buttons["multi"]
                 )
 
-                self.handle_events()
+                self.handle_events(buttons_hovered)
+                self.view.flip()
+                continue
+
+            if not settings.difficulty_chosen and settings.GAME_MODE == "single":
+                buttons_hovered = self.model.get_hovered_btns(pygame.mouse.get_pos())
+                self.model.change_color_if_hover(buttons_hovered)
+
+                self.view.render_difficulty(
+                    self.model.menu_state.buttons["easy"],
+                    self.model.menu_state.buttons["medium"],
+                    self.model.menu_state.buttons["hard"]
+                )
+
+                self.handle_events(buttons_hovered)
                 self.view.flip()
                 continue
 

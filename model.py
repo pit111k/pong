@@ -459,7 +459,8 @@ class Circ:
 class MenuState:
     def __init__(self):
         self.buttons = {
-            "single": Button((settings.BUTTON_START_POS_X, settings.BUTTON_START_POS_Y),
+            "single": Button((settings.BUTTON_START_POS_X,
+                              settings.BUTTON_START_POS_Y),
                              settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
                              settings.BUTTON_HOVER_COLOR, "Singleplayer", settings.BUTTON_TEXT_COLOR,
                              settings.BUTTON_FONT_SIZE),
@@ -467,6 +468,21 @@ class MenuState:
                              settings.BUTTON_START_POS_Y),
                             settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
                             settings.BUTTON_HOVER_COLOR, "Multiplayer", settings.BUTTON_TEXT_COLOR,
+                            settings.BUTTON_FONT_SIZE),
+            "easy": Button((settings.DIFF_BUTTON_START_POS_X,
+                             settings.DIFF_BUTTON_START_POS_Y),
+                            settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
+                            settings.BUTTON_HOVER_COLOR, "Easy", settings.BUTTON_TEXT_COLOR,
+                            settings.BUTTON_FONT_SIZE),
+            "medium": Button((settings.DIFF_BUTTON_START_POS_X + settings.BUTTON_WIDTH + settings.DIST_BETWEEN_BUTTONS,
+                             settings.DIFF_BUTTON_START_POS_Y),
+                            settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
+                            settings.BUTTON_HOVER_COLOR, "Medium", settings.BUTTON_TEXT_COLOR,
+                            settings.BUTTON_FONT_SIZE),
+            "hard": Button((settings.DIFF_BUTTON_START_POS_X + settings.BUTTON_WIDTH*2 + settings.DIST_BETWEEN_BUTTONS*2,
+                             settings.DIFF_BUTTON_START_POS_Y),
+                            settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
+                            settings.BUTTON_HOVER_COLOR, "Hard", settings.BUTTON_TEXT_COLOR,
                             settings.BUTTON_FONT_SIZE)
         }
 

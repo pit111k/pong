@@ -97,6 +97,13 @@ class View:
         # display button two
         self.show_button(btn2, button_font)
 
+    def render_difficulty(self, btn1, btn2, btn3):
+        button_font = pygame.font.Font(settings.FONT, settings.BUTTON_FONT_SIZE)
+        self.screen.fill("black")
+
+        self.show_button(btn1, button_font)
+        self.show_button(btn2, button_font)
+        self.show_button(btn3, button_font)
 
     def show_button(self, btn, button_font):
         pygame.draw.rect(self.screen, btn.color, btn.get_dimensions())
