@@ -57,6 +57,11 @@ class Model:
 
         self.menu_state = MenuState()
 
+    # def initialize_players(self):
+    #     if settings.GAME_MODE == "single":
+    #         settings.PLAYER2_NAME = "Computer"
+    #         settings.AUTO = True
+    #
 
     def update(self):
         """
@@ -96,8 +101,11 @@ class Model:
             return winner
         return None
 
-    def update_difficulty(self):
-        self.p2.step = settings.DIFFICULTIES[settings.DIFFICULTY]
+    def update_step(self):
+        if settings.AUTO:
+            self.p2.step = settings.DIFFICULTIES[settings.DIFFICULTY]
+        else:
+            self.p2.step = settings.PLAYER_STEP
 
     def check_winner(self):
         """

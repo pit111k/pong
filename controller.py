@@ -33,6 +33,12 @@ class Controller:
         self.fps = pygame.time.Clock()
 
     def handle_events(self, buttons_hovered=None):
+        """
+        A function to handle events like escape or mouse events.
+        :param buttons_hovered: A dictionary of buttons. Button name is
+        a key and a value is represented by a boolean
+        :return:None
+        """
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
@@ -41,23 +47,19 @@ class Controller:
             if event.type == pygame.MOUSEBUTTONUP and buttons_hovered is not None:
                 if event.button == 1 and buttons_hovered["multi"] and not settings.game_mode_chosen:
                     self.apply_multi_mode()
-                    return
-                if event.button == 1 and buttons_hovered["single"] and not settings.game_mode_chosen:
+                    # print("mode: multi")
+                elif event.button == 1 and buttons_hovered["single"] and not settings.game_mode_chosen:
                     self.apply_single_mode()
-                    print("mode: single")
-                    return
-                if event.button == 1 and buttons_hovered["easy"]:
+                    # print("mode: single")
+                elif event.button == 1 and buttons_hovered["easy"]:
                     self.apply_difficulty("easy")
-                    print("diff: easy")
-                    return
-                if event.button == 1 and buttons_hovered["medium"]:
+                    # print("diff: easy")
+                elif event.button == 1 and buttons_hovered["medium"]:
                     self.apply_difficulty("medium")
-                    print("diff: medium")
-                    return
-                if event.button == 1 and buttons_hovered["hard"]:
+                    # print("diff: medium")
+                elif event.button == 1 and buttons_hovered["hard"]:
                     self.apply_difficulty("hard")
-                    print("diff: hard")
-                    return
+                    # print("diff: hard")
 
 
     def handle_player_movement_input(self):
@@ -85,17 +87,22 @@ class Controller:
     def apply_difficulty(self, difficulty):
         settings.difficulty_chosen = True
         settings.DIFFICULTY = difficulty
-        self.model.update_difficulty()
+        self.model.update_step()
 
-    @staticmethod
-    def apply_single_mode():
+
+    def apply_single_mode(self):
         settings.game_mode_chosen = True
         settings.GAME_MODE = "single"
+        settings.AUTO = True
+        self.model.update_step()
 
-    @staticmethod
-    def apply_multi_mode():
+
+    def apply_multi_mode(self):
         settings.game_mode_chosen = True
         settings.GAME_MODE = "multiplayer"
+        settings.AUTO = False
+        self.model.update_step()
+        print(f"test, {settings.AUTO}")
 
     def run(self):
         """
@@ -120,6 +127,9 @@ class Controller:
                 self.handle_events(buttons_hovered)
                 self.view.flip()
                 continue
+
+            elif settings.GAME_MODE == "single" and settings.AUTO == False:
+                self.model.initialize_players()
 
             elif not settings.difficulty_chosen and settings.GAME_MODE == "single":
                 buttons_hovered = self.model.get_hovered_btns(pygame.mouse.get_pos())

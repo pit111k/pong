@@ -61,7 +61,7 @@ DELAY_AFTER_VICTORY = 3000  # milliseconds
 game_mode_chosen = False # flag to indicate whether game mode has been chosen
 GAME_MODE = "single"  # single or multiplayer
 difficulty_chosen = False
-DIFFICULTY = "hard"  # easy, medium, hard
+DIFFICULTY = "easy"  # easy, medium, hard
 DIFFICULTIES = {
     "easy": 5,
     "medium": 10,
@@ -71,7 +71,3 @@ DIFFICULTIES = {
 AUTO = False
 PLAYER1_NAME = "Player 1"
 PLAYER2_NAME = "Player 2"
-
-if GAME_MODE == "single":
-    PLAYER2_NAME = "Computer"
-    AUTO = True
