@@ -38,7 +38,6 @@ class Controller:
                 if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
                     self.running = False
 
-    # def handle_click(self, ):
 
     def handle_player_movement_input(self):
         """
@@ -62,13 +61,6 @@ class Controller:
         else:
             self.model.p2.auto_move(self.model.ball.pos, settings.SIZE)
 
-    def mouse_over_btn(self, name):
-        mouse_on_btn = self.model.mouse_on_btn(
-            self.model.menu_state.buttons[name].rect,
-            pygame.mouse.get_pos()
-        )
-        return mouse_on_btn
-
     def apply_single_mode(self):
         pass
 
@@ -87,17 +79,14 @@ class Controller:
             self.view.fill_screen(settings.SCREEN_FILL)
 
             if not settings.game_mode_chosen:
-                mouse_on_btn1 = self.mouse_over_btn("single")
-                mouse_on_btn2 = self.mouse_over_btn("multi")
-                self.model.change_color_if_hover(mouse_on_btn1, mouse_on_btn2)
+                buttons = self.model.get_hovered_btns(pygame.mouse.get_pos())
+                self.model.change_color_if_hover(buttons)
 
 
                 self.view.render_game_mode(
                     self.model.menu_state.buttons["single"],
                     self.model.menu_state.buttons["multi"]
                 )
-
-
 
                 self.handle_events()
                 self.view.flip()

@@ -117,16 +117,26 @@ class Model:
             self.ball.pos[1] + self.ball.get_y_movement()
         )
 
-    def change_color_if_hover(self, mouse_on_btn1: bool, mouse_on_btn2: bool):
-        # change button's color if mouse is over it
-        self.menu_state.buttons["single"].set_hover_color(
-            mouse_on_btn1
-        )
+    def change_color_if_hover(self, buttons):
+        for key in buttons.keys():
+            self.menu_state.buttons[key].set_hover_color(
+                buttons[key]
+            )
 
-        # same for button 2
-        self.menu_state.buttons["multi"].set_hover_color(
-            mouse_on_btn2
-        )
+
+    def get_hovered_btns(self, mouse_pos):
+        buttons = {}
+        for key in self.menu_state.buttons.keys():
+            if self.mouse_over_btn(key, mouse_pos):
+                buttons[key] = True
+            else:
+                buttons[key] = False
+        return buttons
+
+    def mouse_over_btn(self, name, mouse_pos):
+        if self.menu_state.buttons[name].rect.collidepoint(mouse_pos):
+            return True
+        return False
 
     @staticmethod
     def player1_collision(ball_obj, player):
@@ -186,11 +196,11 @@ class Model:
             return 1
         return 0
 
-    @staticmethod
-    def mouse_on_btn(btn_rect, mouse_pos):
-        if btn_rect.collidepoint(mouse_pos):
-            return True
-        return False
+    # @staticmethod
+    # def mouse_on_btn(btn_rect, mouse_pos):
+    #     if btn_rect.collidepoint(mouse_pos):
+    #         return True
+    #     return False
 
 
 class Player:
