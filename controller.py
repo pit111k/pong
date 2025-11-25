@@ -85,24 +85,38 @@ class Controller:
             self.model.p2.auto_move(self.model.ball.pos, settings.SIZE)
 
     def apply_difficulty(self, difficulty):
+        """
+        Apply the chosen difficulty setting.
+        :param difficulty: string representing the chosen difficulty level.
+        :return: None
+        """
         settings.difficulty_chosen = True
         settings.DIFFICULTY = difficulty
         self.model.update_step()
 
 
     def apply_single_mode(self):
+        """
+        Apply the single player mode setting by updating the relevant settings.
+        :return: None
+        """
         settings.game_mode_chosen = True
         settings.GAME_MODE = "single"
         settings.AUTO = True
+        self.model.p2.auto = True
         self.model.update_step()
 
 
     def apply_multi_mode(self):
+        """
+        Apply the multiplayer mode setting by updating the relevant settings.
+        :return: None
+        """
         settings.game_mode_chosen = True
         settings.GAME_MODE = "multiplayer"
         settings.AUTO = False
         self.model.update_step()
-        print(f"test, {settings.AUTO}")
+        # print(f"test, {settings.AUTO}")
 
     def run(self):
         """
@@ -127,9 +141,6 @@ class Controller:
                 self.handle_events(buttons_hovered)
                 self.view.flip()
                 continue
-
-            elif settings.GAME_MODE == "single" and settings.AUTO == False:
-                self.model.initialize_players()
 
             elif not settings.difficulty_chosen and settings.GAME_MODE == "single":
                 buttons_hovered = self.model.get_hovered_btns(pygame.mouse.get_pos())

@@ -57,11 +57,6 @@ class Model:
 
         self.menu_state = MenuState()
 
-    # def initialize_players(self):
-    #     if settings.GAME_MODE == "single":
-    #         settings.PLAYER2_NAME = "Computer"
-    #         settings.AUTO = True
-    #
 
     def update(self):
         """
@@ -102,6 +97,10 @@ class Model:
         return None
 
     def update_step(self):
+        """
+        Update player 2's step based on the current difficulty setting.
+        :return: None
+        """
         if settings.AUTO:
             self.p2.step = settings.DIFFICULTIES[settings.DIFFICULTY]
         else:
@@ -129,6 +128,12 @@ class Model:
         )
 
     def change_color_if_hover(self, buttons):
+        """
+        Change each button's color based on whether it is hovered over.
+        :param buttons: Dictionary with button names as keys and
+                        boolean values indicating hover state.
+        :return: None
+        """
         for key in buttons.keys():
             self.menu_state.buttons[key].set_hover_color(
                 buttons[key]
@@ -136,6 +141,12 @@ class Model:
 
 
     def get_hovered_btns(self, mouse_pos):
+        """
+        Get a dictionary indicating which buttons are hovered over
+        :param mouse_pos: Tuple representing the mouse position (x, y).
+        :return: Dictionary with button names as keys and
+                 boolean values indicating hover state.
+        """
         buttons = {}
         for key in self.menu_state.buttons.keys():
             if self.mouse_over_btn(key, mouse_pos):
@@ -145,6 +156,12 @@ class Model:
         return buttons
 
     def mouse_over_btn(self, name, mouse_pos):
+        """
+        Check if the mouse is over a specific button.
+        :param name: Name of the button to check (buttons are stored in a dictionary).
+        :param mouse_pos: Tuple representing the mouse position (x, y).
+        :return: Boolean indicating if the mouse is over the button.
+        """
         if self.menu_state.buttons[name].rect.collidepoint(mouse_pos):
             return True
         return False
@@ -463,6 +480,17 @@ class Circ:
 
 class MenuState:
     def __init__(self):
+        """
+        Initialize the MenuState with buttons for game mode and
+        difficulty selection. Buttons are stored in a dictionary
+        with their names as keys and Button objects as values.
+        Buttons:
+            - "single": Button for playing singleplayer mode.
+            - "multi": Button for playing multiplayer mode.
+            - "easy": Button for selecting easy difficulty.
+            - "medium": Button for selecting medium difficulty.
+            - "hard": Button for selecting hard difficulty.
+        """
         self.buttons = {
             "single": Button((settings.BUTTON_START_POS_X,
                               settings.BUTTON_START_POS_Y),
@@ -492,7 +520,29 @@ class MenuState:
         }
 
 class Button:
+    """
+    Button class to represent a clickable button in the menu.
+    Attributes:
+        rect (Rect): The rectangle (object from pygame) representing the button.
+        not_hover_color (tuple): The color of the button when not hovered over (R, G, B).
+        hover_color (tuple): The color of the button when hovered over (R, G, B).
+        text (str): The text displayed on the button.
+        text_color (tuple): The color of the button text (R, G, B).
+        font_size (int): The font size of the button text.
+        color (tuple): The current color of the button (R, G, B).
+    """
     def __init__(self, start_pos, width, height, not_hover_color, hover_color, text, text_color, font_size):
+        """
+        Initialize the Button with position, size, colors, text, and font size.
+        :param start_pos: Starting position of the button (x, y).
+        :param width: Width of the button.
+        :param height: Height of the button.
+        :param not_hover_color: Color displayer when not hovered over.
+        :param hover_color: Color displayed when hovered over.
+        :param text: Text displayed on the button.
+        :param text_color: Color of the displayed text.
+        :param font_size: Font size of the displayed text.
+        """
         self.rect = Rect(start_pos[0], start_pos[1], width, height)
         self.not_hover_color = not_hover_color
         self.hover_color = hover_color
@@ -501,16 +551,26 @@ class Button:
         self.font_size = font_size
         self.color = not_hover_color
 
-    def get_text_render(self):
-        return self.text, False, self.text_color
-
     def get_dimensions(self):
+        """
+        Get the dimensions of the button.
+        :return: pygame Rect object representing button's dimensions.
+        """
         return self.rect
 
     def get_center(self):
+        """
+        Get the center position of the button.
+        :return: pygame Rect center variable (x, y).
+        """
         return self.rect.center
 
     def set_hover_color(self, is_hover):
+        """
+        Set the button's color based on hover state.
+        :param is_hover: Boolean indicating whether the button is hovered over.
+        :return: None
+        """
         if is_hover:
             self.color = self.hover_color
         else:

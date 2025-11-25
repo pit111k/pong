@@ -85,9 +85,19 @@ class View:
 
     @staticmethod
     def flip():
+        """
+        Flip the display with the pygame display flip method.
+        :return: None
+        """
         pygame.display.flip()
 
     def render_game_mode(self, btn1, btn2):
+        """
+        Render the game mode selection buttons.
+        :param btn1: Button object for single player mode.
+        :param btn2: Button object for multiplayer mode.
+        :return: None
+        """
         button_font = pygame.font.Font(settings.FONT, settings.BUTTON_FONT_SIZE)
         self.screen.fill("black")
 
@@ -98,6 +108,13 @@ class View:
         self.show_button(btn2, button_font)
 
     def render_difficulty(self, btn1, btn2, btn3):
+        """
+        Render the difficulty selection buttons.
+        :param btn1: Button object for easy mode.
+        :param btn2: Button object for medium mode.
+        :param btn3: Button object for hard mode.
+        :return: none
+        """
         button_font = pygame.font.Font(settings.FONT, settings.BUTTON_FONT_SIZE)
         self.screen.fill("black")
 
@@ -106,6 +123,12 @@ class View:
         self.show_button(btn3, button_font)
 
     def show_button(self, btn, button_font):
+        """
+        Display a button on the screen.
+        :param btn: Button object to be displayed.
+        :param button_font: pygame Font object for rendering button text.
+        :return: None
+        """
         pygame.draw.rect(self.screen, btn.color, btn.get_dimensions())
 
         text_surface = button_font.render(btn.text, False, btn.text_color)

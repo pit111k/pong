@@ -5,6 +5,7 @@ style adjustments.
 
 The setting are organized into following categories:
 - Basic game parameters: Window dimensions and framerate
+- Button constants: Size, color, and positioning of buttons
 - Text controls: Color, font, and size of all text
 - Objects' dimensions: Size and color of paddles and ball
 - Objects' starting positions: Initial coordinates of paddles and ball
