@@ -199,12 +199,6 @@ class Model:
             return 1
         return 0
 
-    # @staticmethod
-    # def mouse_on_btn(btn_rect, mouse_pos):
-    #     if btn_rect.collidepoint(mouse_pos):
-    #         return True
-    #     return False
-
 
 class Player:
     """

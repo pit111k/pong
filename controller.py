@@ -39,20 +39,25 @@ class Controller:
                     self.running = False
 
             if event.type == pygame.MOUSEBUTTONUP and buttons_hovered is not None:
-                if event.button == 1 and buttons_hovered["multi"]:
+                if event.button == 1 and buttons_hovered["multi"] and not settings.game_mode_chosen:
                     self.apply_multi_mode()
-                if event.button == 1 and buttons_hovered["single"]:
+                    return
+                if event.button == 1 and buttons_hovered["single"] and not settings.game_mode_chosen:
                     self.apply_single_mode()
                     print("mode: single")
+                    return
                 if event.button == 1 and buttons_hovered["easy"]:
                     self.apply_difficulty("easy")
                     print("diff: easy")
+                    return
                 if event.button == 1 and buttons_hovered["medium"]:
                     self.apply_difficulty("medium")
                     print("diff: medium")
+                    return
                 if event.button == 1 and buttons_hovered["hard"]:
                     self.apply_difficulty("hard")
                     print("diff: hard")
+                    return
 
 
     def handle_player_movement_input(self):
