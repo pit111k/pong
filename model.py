@@ -117,6 +117,17 @@ class Model:
             self.ball.pos[1] + self.ball.get_y_movement()
         )
 
+    def change_color_if_hover(self, mouse_on_btn1: bool, mouse_on_btn2: bool):
+        # change button's color if mouse is over it
+        self.menu_state.buttons["single"].set_hover_color(
+            mouse_on_btn1
+        )
+
+        # same for button 2
+        self.menu_state.buttons["multi"].set_hover_color(
+            mouse_on_btn2
+        )
+
     @staticmethod
     def player1_collision(ball_obj, player):
         """

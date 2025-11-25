@@ -32,7 +32,7 @@ class Controller:
         self.running = False
         self.fps = pygame.time.Clock()
 
-    def handle_exit_input(self):
+    def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
@@ -62,23 +62,18 @@ class Controller:
         else:
             self.model.p2.auto_move(self.model.ball.pos, settings.SIZE)
 
-    def ask_for_game_mode(self, mouse_on_btn1: bool, mouse_on_btn2: bool):
-        # change button's color if mouse is over it
-        self.model.menu_state.buttons["single"].set_hover_color(
-            mouse_on_btn1
-        )
-
-        # same for button 2
-        self.model.menu_state.buttons["multi"].set_hover_color(
-            mouse_on_btn2
-        )
-
     def mouse_over_btn(self, name):
         mouse_on_btn = self.model.mouse_on_btn(
             self.model.menu_state.buttons[name].rect,
             pygame.mouse.get_pos()
         )
         return mouse_on_btn
+
+    def apply_single_mode(self):
+        pass
+
+    def apply_multi_mode(self):
+        pass
 
     def run(self):
         """
@@ -94,18 +89,22 @@ class Controller:
             if not settings.game_mode_chosen:
                 mouse_on_btn1 = self.mouse_over_btn("single")
                 mouse_on_btn2 = self.mouse_over_btn("multi")
-                self.ask_for_game_mode(mouse_on_btn1, mouse_on_btn2)
+                self.model.change_color_if_hover(mouse_on_btn1, mouse_on_btn2)
 
 
                 self.view.render_game_mode(
                     self.model.menu_state.buttons["single"],
-                    self.model.menu_state.buttons["multi"])
-                self.handle_exit_input()
+                    self.model.menu_state.buttons["multi"]
+                )
+
+
+
+                self.handle_events()
                 self.view.flip()
                 continue
 
             # process input
-            self.handle_exit_input()
+            self.handle_events()
             self.handle_player_movement_input()
 
             # update game state
