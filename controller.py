@@ -62,6 +62,31 @@ class Controller:
         else:
             self.model.p2.auto_move(self.model.ball.pos, settings.SIZE)
 
+    def ask_for_game_mode(self, mouse_on_btn1: bool, mouse_on_btn2: bool):
+        # change button's color if mouse is over it
+        self.model.menu_state.btn_single.set_hover_color(
+            mouse_on_btn1
+        )
+
+        # same for button 2
+        self.model.menu_state.btn_multi.set_hover_color(
+            mouse_on_btn2
+        )
+
+    def mouse_over_btn1(self):
+        mouse_on_bt1 = self.model.mouse_on_btn(
+            self.model.menu_state.btn_single.rect,
+            pygame.mouse.get_pos()
+        )
+        return mouse_on_bt1
+
+    def mouse_over_btn2(self):
+        mouse_on_bt2 = self.model.mouse_on_btn(
+            self.model.menu_state.btn_multi.rect,
+            pygame.mouse.get_pos()
+        )
+        return mouse_on_bt2
+
     def run(self):
         """
         Run the main game loop and control the game flow via MVC pattern.
@@ -73,10 +98,15 @@ class Controller:
         while self.running:
             self.view.fill_screen(settings.SCREEN_FILL)
 
-            if not settings.chosen:
-                self.model.menu_state.btn_single.set_hover_color(self.model.mouse_on_btn(self.model.menu_state.btn_single.rect, pygame.mouse.get_pos()))
-                self.model.menu_state.btn_multi.set_hover_color(self.model.mouse_on_btn(self.model.menu_state.btn_multi.rect, pygame.mouse.get_pos()))
-                self.view.render_game_mode(self.model.menu_state.btn_single, self.model.menu_state.btn_multi)
+            if not settings.game_mode_chosen:
+                mouse_on_btn1 = self.mouse_over_btn1()
+                mouse_on_btn2 = self.mouse_over_btn2()
+                self.ask_for_game_mode(mouse_on_btn1, mouse_on_btn2)
+
+
+                self.view.render_game_mode(
+                    self.model.menu_state.btn_single,
+                    self.model.menu_state.btn_multi)
                 self.handle_exit_input()
                 self.view.flip()
                 continue
@@ -93,7 +123,7 @@ class Controller:
                 winner = self.model.check_winner()
                 self.running = False
 
-            # render changed state
+            # render changed state, winner argument is optional
             self.view.render(self.model, winner)
 
             if self.running is False and winner is not None:

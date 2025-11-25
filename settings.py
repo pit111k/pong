@@ -56,7 +56,7 @@ WINNING_SCORE = 2
 DELAY_AFTER_VICTORY = 3000  # milliseconds
 
 # game mode
-chosen = False # flag to indicate whether game mode has been chosen
+game_mode_chosen = False # flag to indicate whether game mode has been chosen
 GAME_MODE = "single"  # single or multiplayer
 DIFFICULTY = "medium"  # easy, medium, hard
 DIFFICULTIES = {
