@@ -98,7 +98,10 @@ class View:
         :param btn2: Button object for multiplayer mode.
         :return: None
         """
-        button_font = pygame.font.Font(settings.FONT, settings.BUTTON_FONT_SIZE)
+        button_font = pygame.font.Font(
+            settings.FONT,
+            settings.BUTTON_FONT_SIZE
+        )
         self.screen.fill("black")
 
         # display button one
@@ -115,7 +118,10 @@ class View:
         :param btn3: Button object for hard mode.
         :return: none
         """
-        button_font = pygame.font.Font(settings.FONT, settings.BUTTON_FONT_SIZE)
+        button_font = pygame.font.Font(
+            settings.FONT,
+            settings.BUTTON_FONT_SIZE
+        )
         self.screen.fill("black")
 
         self.show_button(btn1, button_font)

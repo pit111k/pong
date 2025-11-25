@@ -21,6 +21,7 @@ class Controller:
         running (bool): Flag to control the game loop.
         fps (pygame.time.Clock): Clock to manage the frame rate.
     """
+
     def __init__(self, model: Model, view: View):
         """
         Initialize the Controller with model and view.
@@ -44,11 +45,14 @@ class Controller:
                 if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
                     self.running = False
 
-            if event.type == pygame.MOUSEBUTTONUP and buttons_hovered is not None:
-                if event.button == 1 and buttons_hovered["multi"] and not settings.game_mode_chosen:
+            if (event.type == pygame.MOUSEBUTTONUP and
+                    buttons_hovered is not None):
+                if (event.button == 1 and buttons_hovered["multi"] and not
+                        settings.game_mode_chosen):
                     self.apply_multi_mode()
                     # print("mode: multi")
-                elif event.button == 1 and buttons_hovered["single"] and not settings.game_mode_chosen:
+                elif (event.button == 1 and buttons_hovered["single"] and not
+                        settings.game_mode_chosen):
                     self.apply_single_mode()
                     # print("mode: single")
                 elif event.button == 1 and buttons_hovered["easy"]:
@@ -60,7 +64,6 @@ class Controller:
                 elif event.button == 1 and buttons_hovered["hard"]:
                     self.apply_difficulty("hard")
                     # print("diff: hard")
-
 
     def handle_player_movement_input(self):
         """
@@ -94,7 +97,6 @@ class Controller:
         settings.DIFFICULTY = difficulty
         self.model.update_step()
 
-
     def apply_single_mode(self):
         """
         Apply the single player mode setting by updating the relevant settings.
@@ -105,7 +107,6 @@ class Controller:
         settings.AUTO = True
         self.model.p2.auto = True
         self.model.update_step()
-
 
     def apply_multi_mode(self):
         """
@@ -130,7 +131,9 @@ class Controller:
             self.view.fill_screen(settings.SCREEN_FILL)
 
             if not settings.game_mode_chosen:
-                buttons_hovered = self.model.get_hovered_btns(pygame.mouse.get_pos())
+                buttons_hovered = self.model.get_hovered_btns(
+                    pygame.mouse.get_pos()
+                )
                 self.model.change_color_if_hover(buttons_hovered)
 
                 self.view.render_game_mode(
@@ -142,8 +145,11 @@ class Controller:
                 self.view.flip()
                 continue
 
-            elif not settings.difficulty_chosen and settings.GAME_MODE == "single":
-                buttons_hovered = self.model.get_hovered_btns(pygame.mouse.get_pos())
+            elif (not settings.difficulty_chosen and
+                  settings.GAME_MODE == "single"):
+                buttons_hovered = self.model.get_hovered_btns(
+                    pygame.mouse.get_pos()
+                )
                 self.model.change_color_if_hover(buttons_hovered)
 
                 self.view.render_difficulty(
@@ -155,7 +161,6 @@ class Controller:
                 self.handle_events(buttons_hovered)
                 self.view.flip()
                 continue
-
 
             # process input
             self.handle_events()

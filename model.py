@@ -25,6 +25,7 @@ class Model:
         p2 (Player): Player 2 object.
         ball (Circ): Ball object.
     """
+
     def __init__(self):
         """
         Initialize the Model with two players and a ball.
@@ -56,7 +57,6 @@ class Model:
         )
 
         self.menu_state = MenuState()
-
 
     def update(self):
         """
@@ -139,7 +139,6 @@ class Model:
                 buttons[key]
             )
 
-
     def get_hovered_btns(self, mouse_pos):
         """
         Get a dictionary indicating which buttons are hovered over
@@ -158,7 +157,8 @@ class Model:
     def mouse_over_btn(self, name, mouse_pos):
         """
         Check if the mouse is over a specific button.
-        :param name: Name of the button to check (buttons are stored in a dictionary).
+        :param name: Name of the button to check
+        (buttons are stored in a dictionary).
         :param mouse_pos: Tuple representing the mouse position (x, y).
         :return: Boolean indicating if the mouse is over the button.
         """
@@ -492,46 +492,66 @@ class MenuState:
             - "hard": Button for selecting hard difficulty.
         """
         self.buttons = {
-            "single": Button((settings.BUTTON_START_POS_X,
-                              settings.BUTTON_START_POS_Y),
-                             settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
-                             settings.BUTTON_HOVER_COLOR, "Singleplayer", settings.BUTTON_TEXT_COLOR,
-                             settings.BUTTON_FONT_SIZE),
-            "multi": Button((settings.BUTTON_START_POS_X + settings.BUTTON_WIDTH + settings.DIST_BETWEEN_BUTTONS,
-                             settings.BUTTON_START_POS_Y),
-                            settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
-                            settings.BUTTON_HOVER_COLOR, "Multiplayer", settings.BUTTON_TEXT_COLOR,
-                            settings.BUTTON_FONT_SIZE),
-            "easy": Button((settings.DIFF_BUTTON_START_POS_X,
-                             settings.DIFF_BUTTON_START_POS_Y),
-                            settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
-                            settings.BUTTON_HOVER_COLOR, "Easy", settings.BUTTON_TEXT_COLOR,
-                            settings.BUTTON_FONT_SIZE),
-            "medium": Button((settings.DIFF_BUTTON_START_POS_X + settings.BUTTON_WIDTH + settings.DIST_BETWEEN_BUTTONS,
-                             settings.DIFF_BUTTON_START_POS_Y),
-                            settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
-                            settings.BUTTON_HOVER_COLOR, "Medium", settings.BUTTON_TEXT_COLOR,
-                            settings.BUTTON_FONT_SIZE),
-            "hard": Button((settings.DIFF_BUTTON_START_POS_X + settings.BUTTON_WIDTH*2 + settings.DIST_BETWEEN_BUTTONS*2,
-                             settings.DIFF_BUTTON_START_POS_Y),
-                            settings.BUTTON_WIDTH, settings.BUTTON_HEIGHT, settings.BUTTON_COLOR,
-                            settings.BUTTON_HOVER_COLOR, "Hard", settings.BUTTON_TEXT_COLOR,
-                            settings.BUTTON_FONT_SIZE)
+            "single": self.create_button("Singleplayer", False, 0),
+            "multi": self.create_button("Multiplayer", False, 1),
+            "easy": self.create_button("Easy", True, 0),
+            "medium": self.create_button("Medium", True, 1),
+            "hard": self.create_button("Hard", True, 2)
         }
+
+    @staticmethod
+    def create_button(text, is_difficulty, multiplier):
+        """
+        Create a Button object with specified text and position.
+        :param text: Text to be displayed on button.
+        :param is_difficulty: Boolean indicating if the
+                button is for difficulty selection.
+        :param multiplier: Used to calculate button position based on index.
+        :return: Button object.
+        """
+        distance = settings.BUTTON_WIDTH + settings.DIST_BETWEEN_BUTTONS
+        if is_difficulty:
+            start_pos = (
+                settings.DIFF_BUTTON_START_POS_X +
+                distance * multiplier,
+                settings.DIFF_BUTTON_START_POS_Y
+            )
+        else:
+            start_pos = (
+                settings.BUTTON_START_POS_X +
+                distance * multiplier,
+                settings.BUTTON_START_POS_Y
+            )
+        return Button(
+            start_pos,
+            settings.BUTTON_WIDTH,
+            settings.BUTTON_HEIGHT,
+            settings.BUTTON_COLOR,
+            settings.BUTTON_HOVER_COLOR,
+            text,
+            settings.BUTTON_TEXT_COLOR,
+            settings.BUTTON_FONT_SIZE
+        )
+
 
 class Button:
     """
     Button class to represent a clickable button in the menu.
     Attributes:
-        rect (Rect): The rectangle (object from pygame) representing the button.
-        not_hover_color (tuple): The color of the button when not hovered over (R, G, B).
-        hover_color (tuple): The color of the button when hovered over (R, G, B).
+        rect (Rect): The rectangle (object from pygame)
+        representing the button.
+        not_hover_color (tuple): The color of the button
+        when not hovered over (R, G, B).
+        hover_color (tuple): The color of the button
+        when hovered over (R, G, B).
         text (str): The text displayed on the button.
         text_color (tuple): The color of the button text (R, G, B).
         font_size (int): The font size of the button text.
         color (tuple): The current color of the button (R, G, B).
     """
-    def __init__(self, start_pos, width, height, not_hover_color, hover_color, text, text_color, font_size):
+
+    def __init__(self, start_pos, width, height, not_hover_color,
+                 hover_color, text, text_color, font_size):
         """
         Initialize the Button with position, size, colors, text, and font size.
         :param start_pos: Starting position of the button (x, y).
