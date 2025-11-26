@@ -13,7 +13,7 @@ Classes:
 
 from random import choice, randint
 from math import cos, sin, radians
-from pygame import Rect
+import pygame
 import settings
 
 
@@ -75,8 +75,8 @@ class Model:
         # collision detection
         if self.ball_horizontal_wall_collision(self.ball):
             self.ball.bounce("horizontal")
-        if (self.player1_collision(self.ball, self.p1) or
-                self.player2_collision(self.ball, self.p2)):
+        if (self.player_collision(self.ball, self.p1) or
+                self.player_collision(self.ball, self.p2)):
             self.ball.speed_up(settings.BALL_SPEED_INCREMENT)
             self.ball.bounce("vertical")
 
@@ -119,13 +119,15 @@ class Model:
 
     def update_ball_pos(self):
         """
-        Update the ball's position based on its current movement.
+        Update the ball's position and
+         its hitbox based on its current movement.
         :return: None
         """
         self.ball.pos = (
             self.ball.pos[0] + self.ball.get_x_movement(),
             self.ball.pos[1] + self.ball.get_y_movement()
         )
+        self.ball.update_hitbox()
 
     def change_color_if_hover(self, buttons):
         """
@@ -167,37 +169,15 @@ class Model:
         return False
 
     @staticmethod
-    def player1_collision(ball_obj, player):
+    def player_collision(ball_obj, player):
         """
-        Check for collision between ball and player 1.
+        Check for collision between ball and player paddle
+        using pygame colliderect function.
         :param ball_obj: Circ object representing the ball.
-        :param player: Player object representing player 1.
-        :return: boolean indicating if a collision occurred.
+        :param player: Player object representing the player.
+        :return: Boolean indicating if a collision occurred.
         """
-        dimensions = player.get_dimensions()
-        is_within = (dimensions[1] <=
-                     ball_obj.pos[1] <=
-                     dimensions[1] + dimensions[3])
-        is_touching = (ball_obj.pos[0] - ball_obj.radius <=
-                       dimensions[2])
-
-        return is_within and is_touching
-
-    @staticmethod
-    def player2_collision(ball_obj, player):
-        """
-        Check for collision between ball and player 2.
-        :param ball_obj: Circ object representing the ball.
-        :param player: Player object representing player 2.
-        :return: boolean indicating if a collision occurred.
-        """
-        dimensions = player.get_dimensions()
-        is_within = (dimensions[1] <=
-                     ball_obj.pos[1] <=
-                     dimensions[1] + dimensions[3])
-        is_touching = (ball_obj.pos[0] + ball_obj.radius >=
-                       dimensions[0])
-        return is_within and is_touching
+        return player.rect.colliderect(ball_obj.rect)
 
     @staticmethod
     def ball_horizontal_wall_collision(ball_obj):
@@ -253,8 +233,8 @@ class Player:
         :param auto: Flag indicating if the player is controlled by AI.
         :param difficulty_step: Difficulty step size for AI-controlled player.
         """
-        self.rect = Rect(starting_pos[0], starting_pos[1],
-                         rect_size[0], rect_size[1])
+        self.rect = pygame.Rect(starting_pos[0], starting_pos[1],
+                                rect_size[0], rect_size[1])
         self.color = color
         self.name = name
         self.auto = auto
@@ -373,7 +353,22 @@ class Circ:
         self.pos = pos
         self.color = color
         self.step = step
+        self.rect = None
+        self.update_hitbox()
         self.randomize_movement()
+
+    def update_hitbox(self):
+        """
+        Update the ball's hitbox (pygame Rect) position
+        based on its current position and radius.
+        :return: None
+        """
+        self.rect = pygame.Rect(
+            self.pos[0] - self.radius,
+            self.pos[1] - self.radius,
+            self.radius * 2,
+            self.radius * 2
+        )
 
     def bounce(self, which_wall):
         """
@@ -428,11 +423,12 @@ class Circ:
 
     def move_to_start(self, start_pos):
         """
-        Move the ball to the starting position.
+        Move the ball and its hitbox to the starting position.
         :param start_pos: Position to move the ball to (x, y).
         :return: None
         """
         self.pos = start_pos
+        self.update_hitbox()
 
     def speed_up(self, increment, up=True):
         """
@@ -568,7 +564,7 @@ class Button:
         :param text_color: Color of the displayed text.
         :param font_size: Font size of the displayed text.
         """
-        self.rect = Rect(start_pos[0], start_pos[1], width, height)
+        self.rect = pygame.Rect(start_pos[0], start_pos[1], width, height)
         self.not_hover_color = not_hover_color
         self.hover_color = hover_color
         self.text = text
