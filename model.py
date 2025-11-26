@@ -113,7 +113,7 @@ class Model:
         """
         if self.p1.get_score() >= settings.WINNING_SCORE:
             return self.p1
-        elif self.p2.get_score() >= settings.WINNING_SCORE:
+        if self.p2.get_score() >= settings.WINNING_SCORE:
             return self.p2
         return None
 
@@ -220,7 +220,7 @@ class Model:
         # returns -1 for left, 0 for none, 1 for right
         if ball_obj.pos[0] - ball_obj.radius <= 0:
             return -1
-        elif ball_obj.pos[0] + ball_obj.radius >= settings.SIZE[0]:
+        if ball_obj.pos[0] + ball_obj.radius >= settings.SIZE[0]:
             return 1
         return 0
 
@@ -479,6 +479,11 @@ class Circ:
 
 
 class MenuState:
+    """
+    Class to hold instances of menu elements.
+    Attributes:
+        buttons: Dictionary of Button objects.
+    """
     def __init__(self):
         """
         Initialize the MenuState with buttons for game mode and

@@ -5,9 +5,9 @@ Classes:
     Controller: Manages the game loop and user input.
 """
 
+import pygame
 from view import View
 from model import Model
-import pygame
 import settings
 
 
@@ -145,8 +145,8 @@ class Controller:
                 self.view.flip()
                 continue
 
-            elif (not settings.difficulty_chosen and
-                  settings.GAME_MODE == "single"):
+            if (not settings.difficulty_chosen and
+                    settings.GAME_MODE == "single"):
                 buttons_hovered = self.model.get_hovered_btns(
                     pygame.mouse.get_pos()
                 )

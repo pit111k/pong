@@ -11,6 +11,13 @@ from model import Model
 
 
 class View:
+    """
+    Class representing the View elements from MVC
+    architecture.
+    Attributes:
+        screen (pygame.Surface): Screen object representing the screen.
+        font (pygame.font): Font object representing the font.
+    """
     def __init__(self):
         """
         Initialize the Pygame view for rendering the game.
