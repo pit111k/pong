@@ -177,7 +177,7 @@ class Model:
         :param player: Player object representing the player.
         :return: Boolean indicating if a collision occurred.
         """
-        return pygame.Rect.colliderect(player.rect, ball_obj.rect)
+        return player.rect.colliderect(ball_obj.rect)
 
     @staticmethod
     def ball_horizontal_wall_collision(ball_obj):
@@ -353,7 +353,7 @@ class Circ:
         self.pos = pos
         self.color = color
         self.step = step
-        self.rect = ()
+        self.rect = None
         self.update_hitbox()
         self.randomize_movement()
 
