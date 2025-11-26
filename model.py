@@ -348,7 +348,6 @@ class Circ:
         :param pos: Starting position of the ball (x, y).
         :param color: Color of the ball (R, G, B).
         :param step: Number of pixels the ball moves per action.
-        :param rect: pygame Rect object representing the ball's hitbox.
         """
         self.radius = radius
         self.pos = pos
