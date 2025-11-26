@@ -1,1 +1,6 @@
-Simple pong game made with pygame. All the settings and other constants are located in the settings.py file.
+Simple pong game made with pygame using MVC architecture.
+
+Controls:
+- **Player 1**: W (up), S (down)
+- **Player 2 (or AI)**: UP ARROW (up), DOWN ARROW (down)
+- **Quit**: ESC
