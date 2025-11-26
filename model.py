@@ -119,7 +119,8 @@ class Model:
 
     def update_ball_pos(self):
         """
-        Update the ball's position based on its current movement.
+        Update the ball's position and
+         its hitbox based on its current movement.
         :return: None
         """
         self.ball.pos = (
@@ -347,6 +348,7 @@ class Circ:
         :param pos: Starting position of the ball (x, y).
         :param color: Color of the ball (R, G, B).
         :param step: Number of pixels the ball moves per action.
+        :param rect: pygame Rect object representing the ball's hitbox.
         """
         self.radius = radius
         self.pos = pos
@@ -422,7 +424,7 @@ class Circ:
 
     def move_to_start(self, start_pos):
         """
-        Move the ball to the starting position.
+        Move the ball and its hitbox to the starting position.
         :param start_pos: Position to move the ball to (x, y).
         :return: None
         """
