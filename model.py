@@ -213,8 +213,8 @@ class Player:
         representing the player's paddle.
         color (tuple): The color of the player's paddle.
         name (str): The name of the player.
-        auto (bool): Flag indicating if the player
-        is controlled by AI.
+        auto (bool): Flag indicating if AI
+         controls the player.
         step (int): The movement step size for the player.
         score (int): The player's score.
     """
@@ -230,7 +230,7 @@ class Player:
         :param color: Color of the player's paddle (R, G, B).
         :param step: Number of pixels the player moves per action.
         :param name: Player's name.
-        :param auto: Flag indicating if the player is controlled by AI.
+        :param auto: Flag indicating if AI controls the player.
         :param difficulty_step: Difficulty step size for AI-controlled player.
         """
         self.rect = pygame.Rect(starting_pos[0], starting_pos[1],
@@ -398,7 +398,7 @@ class Circ:
         angle_range = choice(ranges)
         angle = randint(angle_range[0], angle_range[1])
 
-        # calculate x and y movement based on angle
+        # calculate x and y movement based on an angle
         x = self.step * cos(radians(angle))
         y = self.step * sin(radians(angle))
 
@@ -504,7 +504,7 @@ class MenuState:
     def create_button(text, is_difficulty, multiplier):
         """
         Create a Button object with specified text and position.
-        :param text: Text to be displayed on button.
+        :param text: Text to be displayed on a button.
         :param is_difficulty: Boolean indicating if the
                 button is for difficulty selection.
         :param multiplier: Used to calculate button position based on index.
@@ -588,7 +588,7 @@ class Button:
 
     def set_hover_color(self, is_hover):
         """
-        Set the button's color based on hover state.
+        Set the button's color based on the hover state.
         :param is_hover: Boolean indicating whether the button is hovered over.
         :return: None
         """

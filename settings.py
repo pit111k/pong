@@ -3,7 +3,7 @@ This module defines the global constants used throughout the Pong game.
 It centralizes configuration to allow for easy game balancing and
 style adjustments.
 
-The setting are organized into following categories:
+The settings are organized into the following categories:
 - Basic game parameters: Window dimensions and framerate
 - Button constants: Size, color, and positioning of buttons
 - Text controls: Color, font, and size of all text

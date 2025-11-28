@@ -121,7 +121,7 @@ class Controller:
 
     def run(self):
         """
-        Run the main game loop and control the game flow via MVC pattern.
+        Run the main game loop and control the game flow via an MVC pattern.
         :return: None
         """
         self.running = True
